@@ -7,6 +7,8 @@ import java.util.List;
 
 @Data
 public class Spec {
+    private String version;
+    private SpecConfiguration configuration;
     private List<EndPoint> endPoints;
     private List<UnderstandableType> types;
 
