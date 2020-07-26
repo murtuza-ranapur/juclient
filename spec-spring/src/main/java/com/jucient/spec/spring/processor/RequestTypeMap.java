@@ -1,0 +1,24 @@
+package com.jucient.spec.spring.processor;
+
+import com.juclient.core.parser.RequestType;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+public class RequestTypeMap {
+    private static final Map<Class<?>, RequestType> classRequestType = new HashMap<>();
+
+    static {
+        classRequestType.put(RequestMapping.class, RequestType.UNKNOWN);
+        classRequestType.put(PostMapping.class, RequestType.POST);
+        classRequestType.put(GetMapping.class, RequestType.GET);
+        classRequestType.put(PutMapping.class, RequestType.PUT);
+        classRequestType.put(DeleteMapping.class, RequestType.DELETE);
+    }
+
+    public static Optional<RequestType> findRequestType(Class<?> annotation){
+        return Optional.ofNullable(classRequestType.get(annotation));
+    }
+}
