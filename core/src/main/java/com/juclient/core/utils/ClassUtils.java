@@ -18,7 +18,7 @@ public class ClassUtils {
                              .acceptPackages(packagePath)
                              .scan()) {
             for (ClassInfo routeClassInfo : scanResult.getClassesWithAnnotation(annotation.getName())) {
-                classes.add(routeClassInfo.getClass());
+                classes.add(routeClassInfo.loadClass());
             }
             return classes;
         }catch (Exception e){

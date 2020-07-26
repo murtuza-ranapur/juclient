@@ -21,7 +21,6 @@ public class StudentController {
   }
 
   @ApiClient
-  @RequestMapping(value = "/overview", method = {RequestMethod.GET, RequestMethod.POST})
   @GetMapping("/overview")
   public PagedResponseDTO<List<StudentCourseViewDTO>> getAllStudentsOverview(
       @RequestParam(defaultValue = "0") Integer pageNo,
@@ -41,13 +40,18 @@ public class StudentController {
   @ApiClient
   @PutMapping
   public StudentDTO updateStudent(@RequestBody @Valid StudentRequestDto studentDTO,
-                                  @RequestHeader(required = false, name = "num", value = "1") Integer number) {
+                                  @RequestHeader(required = false) Integer number) {
     return null;
   }
 
   @ApiClient
-  @DeleteMapping("/{id}")
+  @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
   public void deleteStudent(@PathVariable Long id) {
+
+  }
+
+  @ApiClient
+  public void deleteStudentNoClient(@PathVariable Long id) {
 
   }
 }

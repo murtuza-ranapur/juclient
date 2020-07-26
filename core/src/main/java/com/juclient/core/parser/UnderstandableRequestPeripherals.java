@@ -9,5 +9,4 @@ public class UnderstandableRequestPeripherals {
     private String name;
     private Type type;
     private Boolean isRequired;
-    private String defaultValue;
 }
