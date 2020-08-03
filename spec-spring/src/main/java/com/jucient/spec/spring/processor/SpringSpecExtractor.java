@@ -22,8 +22,9 @@ import java.util.stream.Stream;
 
 @Slf4j
 public class SpringSpecExtractor implements Extractor {
-    private static final Set<Class<?>> supportedParameterAnnotations = Stream.of(RequestBody.class, RequestHeader.class,
-            RequestParam.class, PathVariable.class).collect(Collectors.toSet());
+    private static final Set<Class<?>> supportedParameterAnnotations = Stream
+            .of(RequestBody.class, RequestHeader.class, RequestParam.class, PathVariable.class)
+            .collect(Collectors.toSet());
 
     @Override
     public List<UnderstandableFunction> extract(String packagePath) {
@@ -32,7 +33,7 @@ public class SpringSpecExtractor implements Extractor {
         for (Class<?> controller : controllers) {
             String base = findUrlFromRequestMapping(controller);
             List<Method> targetMethod = getTargetAPIMethod(controller);
-            log.info("Found {} target methods in {} controller",targetMethod.size(), controller);
+            log.info("Found {} target methods in {} controller", targetMethod.size(), controller);
             for (Method method : targetMethod) {
                 UnderstandableFunction understandableFunction = convertToUnderstandableFunction(method, base);
                 functions.add(understandableFunction);
@@ -50,21 +51,22 @@ public class SpringSpecExtractor implements Extractor {
         Parameter[] parameters = method.getParameters();
         for (Parameter parameter : parameters) {
             Optional<Annotation> supportedAnnotation = Stream.of(parameter.getAnnotations())
-                    .filter(anno -> supportedParameterAnnotations.contains(anno.annotationType()))
-                    .findFirst();
-            supportedAnnotation.ifPresent(annotation -> setAppropriateValue(parameter, annotation, understandableFunction));
+                    .filter(anno -> supportedParameterAnnotations.contains(anno.annotationType())).findFirst();
+            supportedAnnotation
+                    .ifPresent(annotation -> setAppropriateValue(parameter, annotation, understandableFunction));
         }
         return understandableFunction;
     }
 
-    private void setAppropriateValue(Parameter parameter, Annotation annotation, UnderstandableFunction understandableFunction) {
+    private void setAppropriateValue(Parameter parameter, Annotation annotation,
+            UnderstandableFunction understandableFunction) {
         Class<? extends Annotation> aClass = annotation.annotationType();
         if (RequestBody.class.equals(aClass)) {
             understandableFunction.setRequestBodyType(parameter.getParameterizedType());
-        } else if(RequestParam.class.equals(aClass)){
+        } else if (RequestParam.class.equals(aClass)) {
             RequestParam requestParam = (RequestParam) annotation;
             String paramName = requestParam.value();
-            if(paramName.isBlank()){
+            if (paramName.isBlank()) {
                 paramName = parameter.getName();
             }
             UnderstandableRequestPeripherals requestPeripherals = new UnderstandableRequestPeripherals();
@@ -72,10 +74,10 @@ public class SpringSpecExtractor implements Extractor {
             requestPeripherals.setType(parameter.getParameterizedType());
             requestPeripherals.setIsRequired(requestParam.required());
             understandableFunction.getRequestParam().add(requestPeripherals);
-        } else if(RequestHeader.class.equals(aClass)){
+        } else if (RequestHeader.class.equals(aClass)) {
             RequestHeader requestHeader = (RequestHeader) annotation;
             String paramName = requestHeader.value();
-            if(paramName.isBlank()){
+            if (paramName.isBlank()) {
                 paramName = parameter.getName();
             }
             UnderstandableRequestPeripherals requestPeripherals = new UnderstandableRequestPeripherals();
@@ -84,10 +86,10 @@ public class SpringSpecExtractor implements Extractor {
             requestPeripherals.setIsRequired(requestHeader.required());
             understandableFunction.getRequestHeaders().add(requestPeripherals);
         } else {
-            //Path Param
+            // Path Param
             PathVariable pv = (PathVariable) annotation;
             String pathVariableName = pv.name();
-            if(pathVariableName.isBlank()){
+            if (pathVariableName.isBlank()) {
                 pathVariableName = parameter.getName();
             }
             understandableFunction.getPathParams().add(pathVariableName);
@@ -95,28 +97,29 @@ public class SpringSpecExtractor implements Extractor {
     }
 
     private void putTypeAndPath(UnderstandableFunction understandableFunction, Method method, String base) {
-        Annotation [] annotations = method.getAnnotations();
+        Annotation[] annotations = method.getAnnotations();
         for (Annotation annotation : annotations) {
             Optional<RequestType> typeOptional = RequestTypeMap.findRequestType(annotation.annotationType());
-            if(typeOptional.isPresent()){
+            if (typeOptional.isPresent()) {
                 Optional<String> path = getPathBasedOnRequestType(typeOptional.get(), method);
-                if(path.isPresent()){
+                if (path.isPresent()) {
                     understandableFunction.setRequestType(typeOptional.get());
-                    understandableFunction.setUrl(base+path.get());
-                }else{
-                    //If path is not present case if that it's annotated with @RequestMapping
+                    understandableFunction.setUrl(base + path.get());
+                } else {
+                    // If path is not present case if that it's annotated with @RequestMapping
                     String urlPath = "";
                     RequestMapping requestMapping = method.getAnnotation(RequestMapping.class);
-                    if(requestMapping.value().length>0){
+                    if (requestMapping.value().length > 0) {
                         urlPath = requestMapping.value()[0];
-                    }else {
+                    } else {
                         urlPath = requestMapping.name();
                     }
-                    understandableFunction.setUrl(base+urlPath);
-                    //If no request method present use GET as default or if multiple present pick first
-                    if(requestMapping.method().length>0){
-                        understandableFunction.setRequestType(RequestTypeMap.getRequestType(requestMapping.method()[0]));
-                    }else {
+                    understandableFunction.setUrl(base + urlPath);
+                    // If no request method present use GET as default or if multiple present pick first
+                    if (requestMapping.method().length > 0) {
+                        understandableFunction
+                                .setRequestType(RequestTypeMap.getRequestType(requestMapping.method()[0]));
+                    } else {
                         understandableFunction.setRequestType(RequestType.GET);
                     }
                 }
@@ -125,10 +128,10 @@ public class SpringSpecExtractor implements Extractor {
         }
     }
 
-    private String findUrlFromRequestMapping(Class<?> restClass){
+    private String findUrlFromRequestMapping(Class<?> restClass) {
         RequestMapping annotation = restClass.getAnnotation(RequestMapping.class);
-        if(annotation != null){
-            if(annotation.value().length>0){
+        if (annotation != null) {
+            if (annotation.value().length > 0) {
                 return annotation.value()[0];
             }
             return annotation.name();
@@ -136,15 +139,15 @@ public class SpringSpecExtractor implements Extractor {
         return "";
     }
 
-    private List<Method> getTargetAPIMethod(Class<?> restClass){
-        Method [] methods = restClass.getMethods();
+    private List<Method> getTargetAPIMethod(Class<?> restClass) {
+        Method[] methods = restClass.getMethods();
         List<Method> targetMethods = new LinkedList<>();
         for (Method method : methods) {
             ApiClient apiClient = method.getAnnotation(ApiClient.class);
-            if(apiClient != null){
-                Annotation [] annotations = method.getAnnotations();
+            if (apiClient != null) {
+                Annotation[] annotations = method.getAnnotations();
                 for (Annotation annotation : annotations) {
-                    if(RequestTypeMap.findRequestType(annotation.annotationType()).isPresent()){
+                    if (RequestTypeMap.findRequestType(annotation.annotationType()).isPresent()) {
                         targetMethods.add(method);
                         break;
                     }
@@ -154,51 +157,51 @@ public class SpringSpecExtractor implements Extractor {
         return targetMethods;
     }
 
-    private Optional<String> getPathBasedOnRequestType(RequestType type, Method method){
+    private Optional<String> getPathBasedOnRequestType(RequestType type, Method method) {
         String path = "";
-        switch (type){
-            case GET:
-                GetMapping getMapping = method.getDeclaredAnnotation(GetMapping.class);
-                if(getMapping.value().length>0){
-                    path = getMapping.value()[0];
-                }else {
-                    path = getMapping.name();
-                }
-                break;
-            case PUT:
-                PutMapping putMapping = method.getDeclaredAnnotation(PutMapping.class);
-                if(putMapping.value().length>0){
-                    path = putMapping.value()[0];
-                }else {
-                    path = putMapping.name();
-                }
-                break;
-            case POST:
-                PostMapping postMapping = method.getDeclaredAnnotation(PostMapping.class);
-                if(postMapping.value().length>0){
-                    path = postMapping.value()[0];
-                }else{
-                    path = postMapping.name();
-                }
-                break;
-            case DELETE:
-                DeleteMapping deleteMapping = method.getDeclaredAnnotation(DeleteMapping.class);
-                if(deleteMapping.value().length>0){
-                    path = deleteMapping.value()[0];
-                }else{
-                    path = deleteMapping.name();
-                }
-                break;
-            case PATCH:
-                PatchMapping patchMapping = method.getDeclaredAnnotation(PatchMapping.class);
-                if(patchMapping.value().length>0){
-                    path = patchMapping.value()[0];
-                }else{
-                    path = patchMapping.name();
-                }
-                break;
-            default:
-                return Optional.empty();
+        switch (type) {
+        case GET:
+            GetMapping getMapping = method.getDeclaredAnnotation(GetMapping.class);
+            if (getMapping.value().length > 0) {
+                path = getMapping.value()[0];
+            } else {
+                path = getMapping.name();
+            }
+            break;
+        case PUT:
+            PutMapping putMapping = method.getDeclaredAnnotation(PutMapping.class);
+            if (putMapping.value().length > 0) {
+                path = putMapping.value()[0];
+            } else {
+                path = putMapping.name();
+            }
+            break;
+        case POST:
+            PostMapping postMapping = method.getDeclaredAnnotation(PostMapping.class);
+            if (postMapping.value().length > 0) {
+                path = postMapping.value()[0];
+            } else {
+                path = postMapping.name();
+            }
+            break;
+        case DELETE:
+            DeleteMapping deleteMapping = method.getDeclaredAnnotation(DeleteMapping.class);
+            if (deleteMapping.value().length > 0) {
+                path = deleteMapping.value()[0];
+            } else {
+                path = deleteMapping.name();
+            }
+            break;
+        case PATCH:
+            PatchMapping patchMapping = method.getDeclaredAnnotation(PatchMapping.class);
+            if (patchMapping.value().length > 0) {
+                path = patchMapping.value()[0];
+            } else {
+                path = patchMapping.name();
+            }
+            break;
+        default:
+            return Optional.empty();
         }
         return Optional.of(path);
     }

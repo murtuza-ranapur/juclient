@@ -1,4 +1,4 @@
-package com.juclient.core;
+package com.juclient.extra;
 
 public class Response<T> {
     private T data;

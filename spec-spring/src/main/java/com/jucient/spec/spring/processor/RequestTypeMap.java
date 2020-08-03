@@ -29,11 +29,11 @@ public class RequestTypeMap {
         methodRequestTypeMap.put(RequestMethod.TRACE, RequestType.TRACE);
     }
 
-    public static Optional<RequestType> findRequestType(Class<?> annotation){
+    public static Optional<RequestType> findRequestType(Class<?> annotation) {
         return Optional.ofNullable(classRequestType.get(annotation));
     }
 
-    public static RequestType getRequestType(RequestMethod requestMethod){
+    public static RequestType getRequestType(RequestMethod requestMethod) {
         return methodRequestTypeMap.get(requestMethod);
     }
 }

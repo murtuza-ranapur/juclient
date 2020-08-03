@@ -11,9 +11,11 @@ public class Spec {
     private SpecConfiguration configuration;
     private List<EndPoint> endPoints;
     private List<UnderstandableType> types;
+    private List<UnderstandableEnum> enums;
 
-    public Spec(){
+    Spec() {
         this.endPoints = new LinkedList<>();
         this.types = new LinkedList<>();
+        this.enums = new LinkedList<>();
     }
 }

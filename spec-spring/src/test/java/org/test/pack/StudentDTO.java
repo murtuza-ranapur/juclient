@@ -5,17 +5,17 @@ import lombok.Data;
 @Data
 public class StudentDTO {
 
-  private Long id;
+    private Long id;
 
-  private String name;
+    private String name;
 
-  private Long semester;
+    private Long semester;
 
-  private Long year;
+    private Long year;
 
-  private Long batch;
+    private Long batch;
 
-  private String group;
+    private String group;
 
-  private CourseDTO course;
+    private CourseDTO course;
 }

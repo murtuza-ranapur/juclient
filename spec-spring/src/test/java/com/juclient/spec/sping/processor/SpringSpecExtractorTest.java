@@ -20,13 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SpringSpecExtractorTest {
     @Test
-    public void extract_api_annotation_present(){
+    public void extract_api_annotation_present() {
         SpringSpecExtractor springSpecExtractor = new SpringSpecExtractor();
         List<UnderstandableFunction> functions = springSpecExtractor.extract("org.test.pack");
 
         assertEquals(5, functions.size());
 
-        //Test each and every function
+        // Test each and every function
         Map<String, UnderstandableFunction> functionMap = functions.stream()
                 .collect(Collectors.toMap(UnderstandableFunction::getFunctionName, val -> val));
         validateGetAllStudentsOverview(functionMap.get("getAllStudentsOverview"));
@@ -45,7 +45,7 @@ public class SpringSpecExtractorTest {
     private void validateUpdateStudent(UnderstandableFunction updateStudent) {
         assertEquals(1, updateStudent.getRequestHeaders().size());
         UnderstandableRequestPeripherals requestPeripherals = updateStudent.getRequestHeaders().get(0);
-        assertEquals("number", requestPeripherals.getName() );
+        assertEquals("number", requestPeripherals.getName());
         assertEquals(false, requestPeripherals.getIsRequired());
     }
 

@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class UnderstandableField {
-    private String name;
-    private String type;
+    private final String name;
+    private final String type;
     private boolean isCoreType = true;
 }
