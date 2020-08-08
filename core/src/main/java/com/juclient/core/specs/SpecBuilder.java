@@ -9,6 +9,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class SpecBuilder {
@@ -68,8 +69,31 @@ public class SpecBuilder {
         // Can either be parametrized type
         else if (type instanceof ParameterizedType) {
             ParameterizedType parameterizedType = (ParameterizedType) type;
-            Type rawType = parameterizedType.getRawType();
-            return null;
+            Class<?> rawType = (Class<?>) parameterizedType.getRawType();
+            UnderstandableType understandableType = new UnderstandableType(rawType.getTypeName());
+            typeMap.put(understandableType.getName(), understandableType);
+            understandableType.setParametrized(true);
+            understandableType.setParametrizedTypeNames(Arrays.stream(rawType.getTypeParameters()).map(Objects::toString).collect(Collectors.toList()));
+            for (Field declaredField : rawType.getDeclaredFields()) {
+                Type fieldType = declaredField.getGenericType();
+                String normalTypeName;
+                if(understandableType.getParametrizedTypeNames().contains(fieldType.getTypeName())){
+                    normalTypeName = fieldType.getTypeName();
+                }else{
+                    normalTypeName = extractType(fieldType);
+                }
+                UnderstandableField understandableField = new UnderstandableField(declaredField.getName(),
+                        normalTypeName);
+                understandableType.getFields().add(understandableField);
+            }
+            String finalType = understandableType.getName()+"(";
+            List<String> arguments = new ArrayList<>();
+            for (Type typeArgument : parameterizedType.getActualTypeArguments()) {
+                arguments.add(extractType(typeArgument));
+            }
+            finalType += String.join(",", arguments);
+            finalType += ")";
+            return finalType;
         }
         // Or an enum class
         else if (((Class<?>) type).isEnum()) {

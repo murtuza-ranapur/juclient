@@ -23,7 +23,7 @@ public class TypeParsingAlgorithmTest {
                 ParameterizedType parameterizedType = (ParameterizedType) type;
                 System.out.println(Arrays.toString(parameterizedType.getActualTypeArguments()));
                 Class<?> rawType = (Class<?>) parameterizedType.getRawType();
-                System.out.println("Raw type :" + rawType);
+                System.out.println("Raw type :" + rawType.getName());
                 System.out.println(Arrays.toString(rawType.getTypeParameters()));
                 Field field = rawType.getDeclaredFields()[0];
                 Type fieldType = field.getGenericType();
