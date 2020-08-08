@@ -112,7 +112,7 @@ public class SpecGeneratorTest {
         response.getParametrizedTypeNames().add("T");
         UnderstandableField size = new UnderstandableField("size", "INTEGER");
         UnderstandableField page = new UnderstandableField("page", "INTEGER");
-        response.getFields().add(new UnderstandableField("data","T"));
+        response.getFields().add(new UnderstandableField("data", "T"));
         response.getFields().add(size);
         response.getFields().add(page);
 
@@ -132,10 +132,10 @@ public class SpecGeneratorTest {
         assertEquals(expectedSpec.getConfiguration(), spec.getConfiguration());
     }
 
-    private void assertContains(List<?> expected, List<?> actual){
+    private void assertContains(List<?> expected, List<?> actual) {
         for (Object o : actual) {
-            if(!expected.contains(o)){
-                fail("Expected value :"+o+" absent");
+            if (!expected.contains(o)) {
+                fail("Expected value :" + o + " absent");
             }
         }
     }
@@ -295,7 +295,7 @@ public class SpecGeneratorTest {
     }
 
     @Test
-    public void generate_simple_enum_valid(){
+    public void generate_simple_enum_valid() {
         UnderstandableFunction getParent = new UnderstandableFunction();
         UnderstandableRequestPeripheral param = new UnderstandableRequestPeripheral();
         param.setName("id");
@@ -321,10 +321,10 @@ public class SpecGeneratorTest {
         getParentEp.setSuggestedMethodName("getParent");
 
         UnderstandableType understandableType = new UnderstandableType("com.juclient.extra.VerySimpleEnumClass");
-        understandableType.getFields().add(new UnderstandableField("gender","com.juclient.extra.Gender"));
+        understandableType.getFields().add(new UnderstandableField("gender", "com.juclient.extra.Gender"));
 
         UnderstandableEnum understandableEnum = new UnderstandableEnum("com.juclient.extra.Gender");
-        understandableEnum.getValues().addAll(List.of("MALE","FEMALE","OTHER"));
+        understandableEnum.getValues().addAll(List.of("MALE", "FEMALE", "OTHER"));
 
         Spec expectedSpec = new Spec();
         expectedSpec.setEndPoints(List.of(getParentEp));
@@ -339,7 +339,7 @@ public class SpecGeneratorTest {
     }
 
     @Test
-    public void generate_parametrized_valid(){
+    public void generate_parametrized_valid() {
         UnderstandableFunction getParent = new UnderstandableFunction();
         UnderstandableRequestPeripheral param = new UnderstandableRequestPeripheral();
         param.setName("id");
@@ -367,9 +367,9 @@ public class SpecGeneratorTest {
         UnderstandableType responseType = new UnderstandableType("com.juclient.extra.Response");
         responseType.setParametrized(true);
         responseType.setParametrizedTypeNames(List.of("T"));
-        responseType.getFields().add(new UnderstandableField("data","T"));
-        responseType.getFields().add(new UnderstandableField("size","INTEGER"));
-        responseType.getFields().add(new UnderstandableField("page","INTEGER"));
+        responseType.getFields().add(new UnderstandableField("data", "T"));
+        responseType.getFields().add(new UnderstandableField("size", "INTEGER"));
+        responseType.getFields().add(new UnderstandableField("page", "INTEGER"));
 
         Spec expectedSpec = new Spec();
         expectedSpec.setEndPoints(List.of(getParentEp));

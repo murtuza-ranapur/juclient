@@ -6,6 +6,7 @@ import com.juclient.core.specs.enums.InBuiltTypes;
 import com.juclient.core.specs.model.*;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
@@ -73,20 +74,21 @@ public class SpecBuilder {
             UnderstandableType understandableType = new UnderstandableType(rawType.getTypeName());
             typeMap.put(understandableType.getName(), understandableType);
             understandableType.setParametrized(true);
-            understandableType.setParametrizedTypeNames(Arrays.stream(rawType.getTypeParameters()).map(Objects::toString).collect(Collectors.toList()));
+            understandableType.setParametrizedTypeNames(
+                    Arrays.stream(rawType.getTypeParameters()).map(Objects::toString).collect(Collectors.toList()));
             for (Field declaredField : rawType.getDeclaredFields()) {
                 Type fieldType = declaredField.getGenericType();
                 String normalTypeName;
-                if(understandableType.getParametrizedTypeNames().contains(fieldType.getTypeName())){
+                if (understandableType.getParametrizedTypeNames().contains(fieldType.getTypeName())) {
                     normalTypeName = fieldType.getTypeName();
-                }else{
+                } else {
                     normalTypeName = extractType(fieldType);
                 }
                 UnderstandableField understandableField = new UnderstandableField(declaredField.getName(),
                         normalTypeName);
                 understandableType.getFields().add(understandableField);
             }
-            String finalType = understandableType.getName()+"(";
+            String finalType = understandableType.getName() + "(";
             List<String> arguments = new ArrayList<>();
             for (Type typeArgument : parameterizedType.getActualTypeArguments()) {
                 arguments.add(extractType(typeArgument));
@@ -111,6 +113,9 @@ public class SpecBuilder {
             UnderstandableType understandableType = new UnderstandableType(type.getTypeName());
             typeMap.put(type.getTypeName(), understandableType);
             for (Field declaredField : ((Class<?>) type).getDeclaredFields()) {
+                if (Modifier.isStatic(declaredField.getModifiers())) {
+                    continue;
+                }
                 Type fieldType = declaredField.getGenericType();
                 String normalTypeName = extractType(fieldType);
                 UnderstandableField understandableField = new UnderstandableField(declaredField.getName(),

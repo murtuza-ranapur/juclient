@@ -6,6 +6,8 @@ import java.time.LocalTime;
 import java.util.Date;
 
 public class VerySimpleClass {
+    private static final int finalStaticVal = 1;
+    private static int staticVal;
     private int age;
     private float weight;
     private double bankBalance;
