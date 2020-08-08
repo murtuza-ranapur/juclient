@@ -2,11 +2,14 @@ package com.juclient.core;
 
 import com.juclient.extra.Gender;
 import com.juclient.extra.SampleController;
+import com.juclient.extra.SimpleCollectionClass;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class TypeParsingAlgorithmTest {
@@ -20,6 +23,7 @@ public class TypeParsingAlgorithmTest {
                 ParameterizedType parameterizedType = (ParameterizedType) type;
                 System.out.println(Arrays.toString(parameterizedType.getActualTypeArguments()));
                 Class<?> rawType = (Class<?>) parameterizedType.getRawType();
+                System.out.println("Raw type :" + rawType);
                 System.out.println(Arrays.toString(rawType.getTypeParameters()));
                 Field field = rawType.getDeclaredFields()[0];
                 Type fieldType = field.getGenericType();
@@ -30,9 +34,7 @@ public class TypeParsingAlgorithmTest {
                 System.out.println("Enum: " + type);
                 continue;
             }
-            if (type instanceof Class) {
-                System.out.println("Class: " + type);
-            }
+            System.out.println("Class: " + type);
         }
     }
 }

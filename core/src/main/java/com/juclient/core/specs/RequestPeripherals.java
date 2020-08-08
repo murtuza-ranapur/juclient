@@ -6,4 +6,5 @@ import lombok.Data;
 public class RequestPeripherals {
     private String name;
     private String type;
+    private boolean isRequired;
 }
