@@ -4,7 +4,9 @@ import com.juclient.core.parser.Extractor;
 import com.juclient.core.parser.RequestType;
 import com.juclient.core.parser.UnderstandableFunction;
 import com.juclient.core.parser.UnderstandableRequestPeripheral;
+import com.juclient.core.specs.model.*;
 import com.juclient.extra.*;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.runner.JUnitPlatform;
@@ -15,7 +17,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,6 +26,7 @@ public class SpecGeneratorTest {
     @Mock
     Extractor extractor;
 
+    @Disabled
     @Test
     public void generate_valid_input() {
         UnderstandableFunction getParent = new UnderstandableFunction();

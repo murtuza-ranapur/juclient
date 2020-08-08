@@ -1,4 +1,4 @@
-package com.juclient.core.specs;
+package com.juclient.core.specs.model;
 
 import lombok.Data;
 

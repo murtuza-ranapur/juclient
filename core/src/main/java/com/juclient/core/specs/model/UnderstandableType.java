@@ -1,8 +1,6 @@
-package com.juclient.core.specs;
+package com.juclient.core.specs.model;
 
-import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 import java.util.LinkedList;
 import java.util.List;

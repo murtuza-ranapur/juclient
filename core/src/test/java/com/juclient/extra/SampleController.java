@@ -1,7 +1,6 @@
 package com.juclient.extra;
 
-import com.juclient.core.specs.EndPoint;
-import com.juclient.extra.Response;
+import com.juclient.core.specs.model.EndPoint;
 
 import java.util.List;
 

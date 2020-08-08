@@ -3,6 +3,7 @@ package com.juclient.core.specs;
 import com.juclient.core.parser.UnderstandableFunction;
 import com.juclient.core.parser.UnderstandableRequestPeripheral;
 import com.juclient.core.specs.enums.InBuiltTypes;
+import com.juclient.core.specs.model.*;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;

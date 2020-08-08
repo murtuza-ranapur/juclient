@@ -1,5 +1,9 @@
 package com.juclient.core.specs;
 
+import com.juclient.core.specs.model.EndPoint;
+import com.juclient.core.specs.model.SpecConfiguration;
+import com.juclient.core.specs.model.UnderstandableEnum;
+import com.juclient.core.specs.model.UnderstandableType;
 import lombok.Data;
 
 import java.util.LinkedList;
