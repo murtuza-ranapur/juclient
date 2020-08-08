@@ -3,7 +3,7 @@ package com.juclient.core.specs;
 import com.juclient.core.parser.Extractor;
 import com.juclient.core.parser.RequestType;
 import com.juclient.core.parser.UnderstandableFunction;
-import com.juclient.core.parser.UnderstandableRequestPeripherals;
+import com.juclient.core.parser.UnderstandableRequestPeripheral;
 import com.juclient.extra.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +28,7 @@ public class SpecGeneratorTest {
     @Test
     public void generate_valid_input() {
         UnderstandableFunction getParent = new UnderstandableFunction();
-        UnderstandableRequestPeripherals param = new UnderstandableRequestPeripherals();
+        UnderstandableRequestPeripheral param = new UnderstandableRequestPeripheral();
         param.setName("id");
         param.setType(int.class);
         param.setIsRequired(true);
@@ -43,10 +43,10 @@ public class SpecGeneratorTest {
         getParentEp.setGroup("com.juclient.extra");
         getParentEp.setUrl("/parent");
         getParentEp.setRequestType("GET");
-        RequestPeripherals requestPeripherals = new RequestPeripherals();
-        requestPeripherals.setName("id");
-        requestPeripherals.setType("INTEGER");
-        getParentEp.getRequestParams().add(requestPeripherals);
+        RequestPeripheral requestPeripheral = new RequestPeripheral();
+        requestPeripheral.setName("id");
+        requestPeripheral.setType("INTEGER");
+        getParentEp.getRequestParams().add(requestPeripheral);
         getParentEp.setReturnType("ElementGrandParent");
         getParentEp.setSuggestedMethodName("getParent");
 
@@ -130,7 +130,7 @@ public class SpecGeneratorTest {
     @Test
     public void generate_simple_object_valid() {
         UnderstandableFunction getParent = new UnderstandableFunction();
-        UnderstandableRequestPeripherals param = new UnderstandableRequestPeripherals();
+        UnderstandableRequestPeripheral param = new UnderstandableRequestPeripheral();
         param.setName("id");
         param.setType(int.class);
         param.setIsRequired(true);
@@ -145,11 +145,11 @@ public class SpecGeneratorTest {
         getParentEp.setGroup("com.juclient.extra");
         getParentEp.setUrl("/parent");
         getParentEp.setRequestType("GET");
-        RequestPeripherals requestPeripherals = new RequestPeripherals();
-        requestPeripherals.setName("id");
-        requestPeripherals.setType("INTEGER");
-        requestPeripherals.setRequired(true);
-        getParentEp.getRequestParams().add(requestPeripherals);
+        RequestPeripheral requestPeripheral = new RequestPeripheral();
+        requestPeripheral.setName("id");
+        requestPeripheral.setType("INTEGER");
+        requestPeripheral.setRequired(true);
+        getParentEp.getRequestParams().add(requestPeripheral);
         getParentEp.setReturnType("com.juclient.extra.VerySimpleClass");
         getParentEp.setSuggestedMethodName("getParent");
 
@@ -181,7 +181,7 @@ public class SpecGeneratorTest {
     @Test
     public void generate_compound_object_valid() {
         UnderstandableFunction getParent = new UnderstandableFunction();
-        UnderstandableRequestPeripherals param = new UnderstandableRequestPeripherals();
+        UnderstandableRequestPeripheral param = new UnderstandableRequestPeripheral();
         param.setName("id");
         param.setType(int.class);
         param.setIsRequired(true);
@@ -196,11 +196,11 @@ public class SpecGeneratorTest {
         getParentEp.setGroup("com.juclient.extra");
         getParentEp.setUrl("/parent");
         getParentEp.setRequestType("GET");
-        RequestPeripherals requestPeripherals = new RequestPeripherals();
-        requestPeripherals.setName("id");
-        requestPeripherals.setType("INTEGER");
-        requestPeripherals.setRequired(true);
-        getParentEp.getRequestParams().add(requestPeripherals);
+        RequestPeripheral requestPeripheral = new RequestPeripheral();
+        requestPeripheral.setName("id");
+        requestPeripheral.setType("INTEGER");
+        requestPeripheral.setRequired(true);
+        getParentEp.getRequestParams().add(requestPeripheral);
         getParentEp.setReturnType("com.juclient.extra.VerySimpleCompoundClass");
         getParentEp.setSuggestedMethodName("getParent");
 
@@ -238,7 +238,7 @@ public class SpecGeneratorTest {
     @Test
     public void generate_collection_valid() {
         UnderstandableFunction getParent = new UnderstandableFunction();
-        UnderstandableRequestPeripherals param = new UnderstandableRequestPeripherals();
+        UnderstandableRequestPeripheral param = new UnderstandableRequestPeripheral();
         param.setName("id");
         param.setType(int.class);
         param.setIsRequired(true);
@@ -253,11 +253,11 @@ public class SpecGeneratorTest {
         getParentEp.setGroup("com.juclient.extra");
         getParentEp.setUrl("/parent");
         getParentEp.setRequestType("GET");
-        RequestPeripherals requestPeripherals = new RequestPeripherals();
-        requestPeripherals.setName("id");
-        requestPeripherals.setType("INTEGER");
-        requestPeripherals.setRequired(true);
-        getParentEp.getRequestParams().add(requestPeripherals);
+        RequestPeripheral requestPeripheral = new RequestPeripheral();
+        requestPeripheral.setName("id");
+        requestPeripheral.setType("INTEGER");
+        requestPeripheral.setRequired(true);
+        getParentEp.getRequestParams().add(requestPeripheral);
         getParentEp.setReturnType("com.juclient.extra.SimpleCollectionClass");
         getParentEp.setSuggestedMethodName("getParent");
 

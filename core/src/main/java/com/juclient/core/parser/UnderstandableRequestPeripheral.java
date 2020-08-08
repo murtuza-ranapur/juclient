@@ -5,7 +5,7 @@ import lombok.Data;
 import java.lang.reflect.Type;
 
 @Data
-public class UnderstandableRequestPeripherals {
+public class UnderstandableRequestPeripheral {
     private String name;
     private Type type;
     private Boolean isRequired;

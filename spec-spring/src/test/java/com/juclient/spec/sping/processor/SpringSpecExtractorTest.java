@@ -3,15 +3,11 @@ package com.juclient.spec.sping.processor;
 import com.jucient.spec.spring.processor.SpringSpecExtractor;
 import com.juclient.core.parser.RequestType;
 import com.juclient.core.parser.UnderstandableFunction;
-import com.juclient.core.parser.UnderstandableRequestPeripherals;
+import com.juclient.core.parser.UnderstandableRequestPeripheral;
 import org.junit.jupiter.api.Test;
-import org.test.pack.PagedResponseDTO;
 import org.test.pack.StudentDTO;
 import org.test.pack.StudentRequestDto;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -44,14 +40,14 @@ public class SpringSpecExtractorTest {
 
     private void validateUpdateStudent(UnderstandableFunction updateStudent) {
         assertEquals(1, updateStudent.getRequestHeaders().size());
-        UnderstandableRequestPeripherals requestPeripherals = updateStudent.getRequestHeaders().get(0);
+        UnderstandableRequestPeripheral requestPeripherals = updateStudent.getRequestHeaders().get(0);
         assertEquals("number", requestPeripherals.getName());
         assertEquals(false, requestPeripherals.getIsRequired());
     }
 
     private void validateAddStudent(UnderstandableFunction addStudent) {
         assertEquals(addStudent.getRequestParam().size(), 1);
-        UnderstandableRequestPeripherals requestPeripherals = addStudent.getRequestParam().get(0);
+        UnderstandableRequestPeripheral requestPeripherals = addStudent.getRequestParam().get(0);
         assertEquals(requestPeripherals.getName(), "yolo");
         assertEquals(addStudent.getRequestType(), RequestType.POST);
         assertEquals(addStudent.getRequestReturnType(), StudentDTO.class);

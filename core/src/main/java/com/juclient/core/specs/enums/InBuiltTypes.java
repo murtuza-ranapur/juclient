@@ -6,18 +6,14 @@ import java.time.LocalTime;
 import java.util.*;
 
 public enum InBuiltTypes {
-    STRING("STRING", String.class.getName()),
-    INTEGER("INTEGER", "int", Integer.class.getName()),
-    FLOAT("FLOAT", "float",Float.class.getName()),
-    DOUBLE("DOUBLE", "double",Double.class.getName()),
-    LONG("LONG", "long",Long.class.getName()),
-    BOOLEAN("BOOLEAN", "boolean",Boolean.class.getName()),
+    STRING("STRING", String.class.getName()), INTEGER("INTEGER", "int", Integer.class.getName()),
+    FLOAT("FLOAT", "float", Float.class.getName()), DOUBLE("DOUBLE", "double", Double.class.getName()),
+    LONG("LONG", "long", Long.class.getName()), BOOLEAN("BOOLEAN", "boolean", Boolean.class.getName()),
     DATE("DATE", Date.class.getName(), LocalDate.class.getName(), LocalDateTime.class.getName()),
-    TIME("TIME", LocalTime.class.getName()),
-    OBJECT("OBJECT",Object.class.getName());
+    TIME("TIME", LocalTime.class.getName()), OBJECT("OBJECT", Object.class.getName());
 
     private final String alias;
-    private final String [] types;
+    private final String[] types;
 
     private static Map<String, String> typeMap = Collections.unmodifiableMap(createMap());
 

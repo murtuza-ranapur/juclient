@@ -11,8 +11,8 @@ public class UnderstandableFunction {
     private String className;
     private String functionName;
     private String url;
-    private List<UnderstandableRequestPeripherals> requestParam = new LinkedList<>();
-    private List<UnderstandableRequestPeripherals> requestHeaders = new LinkedList<>();
+    private List<UnderstandableRequestPeripheral> requestParam = new LinkedList<>();
+    private List<UnderstandableRequestPeripheral> requestHeaders = new LinkedList<>();
     private List<String> pathParams = new LinkedList<>();
     private Type requestBodyType;
     private Type requestReturnType;

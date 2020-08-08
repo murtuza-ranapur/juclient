@@ -1,7 +1,7 @@
 package com.juclient.core.specs;
 
 import com.juclient.core.parser.UnderstandableFunction;
-import com.juclient.core.parser.UnderstandableRequestPeripherals;
+import com.juclient.core.parser.UnderstandableRequestPeripheral;
 import com.juclient.core.specs.enums.InBuiltTypes;
 
 import java.lang.reflect.Field;
@@ -36,14 +36,14 @@ public class SpecBuilder {
         return this;
     }
 
-    private List<RequestPeripherals> extractPeripherals(List<UnderstandableRequestPeripherals> requestParam) {
-        List<RequestPeripherals> peripheralsList = new ArrayList<>(requestParam.size());
-        for (UnderstandableRequestPeripherals understandableRequestPeripheral : requestParam) {
-            RequestPeripherals requestPeripherals = new RequestPeripherals();
-            requestPeripherals.setName(understandableRequestPeripheral.getName());
-            requestPeripherals.setType(extractType(understandableRequestPeripheral.getType()));
-            requestPeripherals.setRequired(understandableRequestPeripheral.getIsRequired());
-            peripheralsList.add(requestPeripherals);
+    private List<RequestPeripheral> extractPeripherals(List<UnderstandableRequestPeripheral> requestParam) {
+        List<RequestPeripheral> peripheralsList = new ArrayList<>(requestParam.size());
+        for (UnderstandableRequestPeripheral understandableRequestPeripheral : requestParam) {
+            RequestPeripheral requestPeripheral = new RequestPeripheral();
+            requestPeripheral.setName(understandableRequestPeripheral.getName());
+            requestPeripheral.setType(extractType(understandableRequestPeripheral.getType()));
+            requestPeripheral.setRequired(understandableRequestPeripheral.getIsRequired());
+            peripheralsList.add(requestPeripheral);
         }
         return peripheralsList;
     }

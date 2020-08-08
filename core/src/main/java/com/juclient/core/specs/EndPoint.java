@@ -10,8 +10,8 @@ public class EndPoint {
     private String url;
     private String group;
     private String suggestedMethodName;
-    private List<RequestPeripherals> requestParams;
-    private List<RequestPeripherals> headers;
+    private List<RequestPeripheral> requestParams;
+    private List<RequestPeripheral> headers;
     private List<String> pathParams;
     private String requestType;
     private String requestBodyType;

@@ -4,7 +4,7 @@ import com.juclient.core.annotations.ApiClient;
 import com.juclient.core.parser.Extractor;
 import com.juclient.core.parser.RequestType;
 import com.juclient.core.parser.UnderstandableFunction;
-import com.juclient.core.parser.UnderstandableRequestPeripherals;
+import com.juclient.core.parser.UnderstandableRequestPeripheral;
 import com.juclient.core.utils.ClassUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.lang.reflect.Type;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -69,7 +68,7 @@ public class SpringSpecExtractor implements Extractor {
             if (paramName.isBlank()) {
                 paramName = parameter.getName();
             }
-            UnderstandableRequestPeripherals requestPeripherals = new UnderstandableRequestPeripherals();
+            UnderstandableRequestPeripheral requestPeripherals = new UnderstandableRequestPeripheral();
             requestPeripherals.setName(paramName);
             requestPeripherals.setType(parameter.getParameterizedType());
             requestPeripherals.setIsRequired(requestParam.required());
@@ -80,7 +79,7 @@ public class SpringSpecExtractor implements Extractor {
             if (paramName.isBlank()) {
                 paramName = parameter.getName();
             }
-            UnderstandableRequestPeripherals requestPeripherals = new UnderstandableRequestPeripherals();
+            UnderstandableRequestPeripheral requestPeripherals = new UnderstandableRequestPeripheral();
             requestPeripherals.setName(paramName);
             requestPeripherals.setType(parameter.getParameterizedType());
             requestPeripherals.setIsRequired(requestHeader.required());
