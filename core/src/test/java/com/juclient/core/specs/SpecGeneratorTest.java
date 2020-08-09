@@ -6,6 +6,7 @@ import com.juclient.core.parser.UnderstandableFunction;
 import com.juclient.core.parser.UnderstandableRequestPeripheral;
 import com.juclient.core.specs.model.*;
 import com.juclient.extra.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +25,17 @@ import static org.mockito.Mockito.when;
 public class SpecGeneratorTest {
 
     @Mock
-    Extractor extractor;
+    private Extractor extractor;
+
+    private  static SpecConfiguration specConfiguration;
+
+    @BeforeAll
+    public static void init(){
+        specConfiguration = new SpecConfiguration();
+        specConfiguration.setSpecVersion("1.0.0");
+        specConfiguration.setBaseLanguage("JAVA");
+        specConfiguration.setSpec("dummy");
+    }
 
     @Test
     public void generate_valid_input() {
@@ -120,16 +131,22 @@ public class SpecGeneratorTest {
         expectedSpec.setEndPoints(List.of(getParentEp, createParentEp, searchParentEp));
         expectedSpec.setTypes(List.of(grandParentType, parentType, childType, response));
         expectedSpec.setEnums(List.of(understandableEnum));
+        expectedSpec.setConfiguration(specConfiguration);
 
         List<UnderstandableFunction> understandableFunctions = List.of(getParent, createParent, searchPatentByname);
         when(extractor.extract("com.juclient.extra")).thenReturn(understandableFunctions);
+        when(extractor.specName()).thenReturn("dummy");
 
         Spec spec = SpecGenerator.generate(extractor, "com.juclient.extra");
+        assertSpec(expectedSpec, spec);
+    }
+
+    private void assertSpec(Spec expectedSpec, Spec spec){
         assertIterableEquals(expectedSpec.getEndPoints(), spec.getEndPoints());
         assertContains(expectedSpec.getEnums(), spec.getEnums());
         assertContains(expectedSpec.getTypes(), spec.getTypes());
         assertEquals(expectedSpec.getVersion(), spec.getVersion());
-        assertEquals(expectedSpec.getConfiguration(), spec.getConfiguration());
+        assertConfiguration(expectedSpec.getConfiguration(), spec.getConfiguration());
     }
 
     private void assertContains(List<?> expected, List<?> actual) {
@@ -138,6 +155,12 @@ public class SpecGeneratorTest {
                 fail("Expected value :" + o + " absent");
             }
         }
+    }
+
+    private void assertConfiguration(SpecConfiguration expected, SpecConfiguration actual){
+        assertEquals(expected.getSpec(), expected.getSpec());
+        assertNotNull(actual.getGenerationDate());
+        assertNotNull(actual.getBaseLanguage());
     }
 
     @Test
@@ -183,12 +206,14 @@ public class SpecGeneratorTest {
         Spec expectedSpec = new Spec();
         expectedSpec.setEndPoints(List.of(getParentEp));
         expectedSpec.setTypes(List.of(verySimpleClass));
+        expectedSpec.setConfiguration(specConfiguration);
 
         List<UnderstandableFunction> understandableFunctions = List.of(getParent);
         when(extractor.extract("com.juclient.extra")).thenReturn(understandableFunctions);
+        when(extractor.specName()).thenReturn("dummy");
 
         Spec spec = SpecGenerator.generate(extractor, "com.juclient.extra");
-        assertEquals(expectedSpec, spec);
+        assertSpec(expectedSpec, spec);
     }
 
     @Test
@@ -240,12 +265,14 @@ public class SpecGeneratorTest {
         Spec expectedSpec = new Spec();
         expectedSpec.setEndPoints(List.of(getParentEp));
         expectedSpec.setTypes(List.of(verySimpleClass, verySimpleCompoundClass));
+        expectedSpec.setConfiguration(specConfiguration);
 
         List<UnderstandableFunction> understandableFunctions = List.of(getParent);
         when(extractor.extract("com.juclient.extra")).thenReturn(understandableFunctions);
+        when(extractor.specName()).thenReturn("dummy");
 
         Spec spec = SpecGenerator.generate(extractor, "com.juclient.extra");
-        assertEquals(expectedSpec, spec);
+        assertSpec(expectedSpec, spec);
     }
 
     @Test
@@ -285,12 +312,14 @@ public class SpecGeneratorTest {
         Spec expectedSpec = new Spec();
         expectedSpec.setEndPoints(List.of(getParentEp));
         expectedSpec.setTypes(List.of(understandableType));
+        expectedSpec.setConfiguration(specConfiguration);
 
         List<UnderstandableFunction> understandableFunctions = List.of(getParent);
         when(extractor.extract("com.juclient.extra")).thenReturn(understandableFunctions);
+        when(extractor.specName()).thenReturn("dummy");
 
         Spec spec = SpecGenerator.generate(extractor, "com.juclient.extra");
-        assertEquals(expectedSpec, spec);
+        assertSpec(expectedSpec, spec);
 
     }
 
@@ -330,12 +359,14 @@ public class SpecGeneratorTest {
         expectedSpec.setEndPoints(List.of(getParentEp));
         expectedSpec.setTypes(List.of(understandableType));
         expectedSpec.setEnums(List.of(understandableEnum));
+        expectedSpec.setConfiguration(specConfiguration);
 
         List<UnderstandableFunction> understandableFunctions = List.of(getParent);
         when(extractor.extract("com.juclient.extra")).thenReturn(understandableFunctions);
+        when(extractor.specName()).thenReturn("dummy");
 
         Spec spec = SpecGenerator.generate(extractor, "com.juclient.extra");
-        assertEquals(expectedSpec, spec);
+        assertSpec(expectedSpec, spec);
     }
 
     @Test
@@ -374,11 +405,13 @@ public class SpecGeneratorTest {
         Spec expectedSpec = new Spec();
         expectedSpec.setEndPoints(List.of(getParentEp));
         expectedSpec.setTypes(List.of(responseType));
+        expectedSpec.setConfiguration(specConfiguration);
 
         List<UnderstandableFunction> understandableFunctions = List.of(getParent);
         when(extractor.extract("com.juclient.extra")).thenReturn(understandableFunctions);
+        when(extractor.specName()).thenReturn("dummy");
 
         Spec spec = SpecGenerator.generate(extractor, "com.juclient.extra");
-        assertEquals(expectedSpec, spec);
+        assertSpec(expectedSpec, spec);
     }
 }

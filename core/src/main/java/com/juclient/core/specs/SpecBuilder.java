@@ -15,11 +15,16 @@ import java.util.stream.Stream;
 
 public class SpecBuilder {
     private final Spec spec;
+    private final SpecConfiguration configuration;
     private final Map<String, UnderstandableType> typeMap;
     private final Map<String, UnderstandableEnum> enumMap;
 
     public SpecBuilder() {
         this.spec = new Spec();
+        this.configuration = new SpecConfiguration();
+        this.configuration.setBaseLanguage("JAVA");
+        this.configuration.setSpecVersion(Runtime.version().toString());
+        this.configuration.setGenerationDate(new Date());
         this.typeMap = new HashMap<>();
         this.enumMap = new HashMap<>();
     }
@@ -36,6 +41,16 @@ public class SpecBuilder {
         endPoint.setRequestParams(extractPeripherals(understandableFunction.getRequestParam()));
         endPoint.setHeaders(extractPeripherals(understandableFunction.getRequestHeaders()));
         spec.getEndPoints().add(endPoint);
+        return this;
+    }
+
+    public SpecBuilder version(String version) {
+        configuration.setSpecVersion(version);
+        return this;
+    }
+
+    public SpecBuilder spec(String name){
+        configuration.setSpec(name);
         return this;
     }
 
@@ -161,6 +176,7 @@ public class SpecBuilder {
     }
 
     public Spec build() {
+        spec.setConfiguration(configuration);
         spec.setTypes(new ArrayList<>(typeMap.values()));
         spec.setEnums(new ArrayList<>(enumMap.values()));
         return spec;
