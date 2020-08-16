@@ -1,5 +1,6 @@
 package com.juclient.core.specs;
 
+import com.google.gson.Gson;
 import com.juclient.core.parser.Extractor;
 import com.juclient.core.parser.RequestType;
 import com.juclient.core.parser.UnderstandableFunction;
@@ -7,7 +8,6 @@ import com.juclient.core.parser.UnderstandableRequestPeripheral;
 import com.juclient.core.specs.model.*;
 import com.juclient.extra.*;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.runner.JUnitPlatform;
@@ -27,10 +27,10 @@ public class SpecGeneratorTest {
     @Mock
     private Extractor extractor;
 
-    private  static SpecConfiguration specConfiguration;
+    private static SpecConfiguration specConfiguration;
 
     @BeforeAll
-    public static void init(){
+    public static void init() {
         specConfiguration = new SpecConfiguration();
         specConfiguration.setSpecVersion("1.0.0");
         specConfiguration.setBaseLanguage("JAVA");
@@ -95,15 +95,15 @@ public class SpecGeneratorTest {
         searchParentEp.setReturnType("com.juclient.extra.Response([com.juclient.extra.ElementGrandParent])");
         searchParentEp.setSuggestedMethodName("search");
 
-        UnderstandableEnum understandableEnum = new UnderstandableEnum("com.juclient.extra.Gender");
+        UnderstandableEnum understandableEnum = new UnderstandableEnum("Gender", "com.juclient.extra");
         understandableEnum.setValues(List.of("MALE", "FEMALE", "OTHER"));
-        UnderstandableType childType = new UnderstandableType("com.juclient.extra.ElementChild");
+        UnderstandableType childType = new UnderstandableType("ElementChild", "com.juclient.extra");
         UnderstandableField gender = new UnderstandableField("gender", "com.juclient.extra.Gender");
         UnderstandableField name = new UnderstandableField("name", "STRING");
         childType.getFields().add(gender);
         childType.getFields().add(name);
 
-        UnderstandableType parentType = new UnderstandableType("com.juclient.extra.ElementParent");
+        UnderstandableType parentType = new UnderstandableType("ElementParent", "com.juclient.extra");
         UnderstandableField listChild = new UnderstandableField("children", "<com.juclient.extra.ElementChild>");
         UnderstandableField balance = new UnderstandableField("balance", "LONG");
         UnderstandableField height = new UnderstandableField("height", "FLOAT");
@@ -111,14 +111,14 @@ public class SpecGeneratorTest {
         parentType.getFields().add(height);
         parentType.getFields().add(listChild);
 
-        UnderstandableType grandParentType = new UnderstandableType("com.juclient.extra.ElementGrandParent");
+        UnderstandableType grandParentType = new UnderstandableType("ElementGrandParent", "com.juclient.extra");
         UnderstandableField listParent = new UnderstandableField("parents", "[com.juclient.extra.ElementParent]");
         UnderstandableField age = new UnderstandableField("age", "INTEGER");
         grandParentType.getFields().add(name);
         grandParentType.getFields().add(age);
         grandParentType.getFields().add(listParent);
 
-        UnderstandableType response = new UnderstandableType("com.juclient.extra.Response");
+        UnderstandableType response = new UnderstandableType("Response", "com.juclient.extra");
         response.setParametrized(true);
         response.getParametrizedTypeNames().add("T");
         UnderstandableField size = new UnderstandableField("size", "INTEGER");
@@ -138,10 +138,12 @@ public class SpecGeneratorTest {
         when(extractor.specName()).thenReturn("dummy");
 
         Spec spec = SpecGenerator.generate(extractor, "com.juclient.extra");
+        Gson gson = new Gson();
+        System.out.println(gson.toJson(spec));
         assertSpec(expectedSpec, spec);
     }
 
-    private void assertSpec(Spec expectedSpec, Spec spec){
+    private void assertSpec(Spec expectedSpec, Spec spec) {
         assertIterableEquals(expectedSpec.getEndPoints(), spec.getEndPoints());
         assertContains(expectedSpec.getEnums(), spec.getEnums());
         assertContains(expectedSpec.getTypes(), spec.getTypes());
@@ -157,7 +159,7 @@ public class SpecGeneratorTest {
         }
     }
 
-    private void assertConfiguration(SpecConfiguration expected, SpecConfiguration actual){
+    private void assertConfiguration(SpecConfiguration expected, SpecConfiguration actual) {
         assertEquals(expected.getSpec(), expected.getSpec());
         assertNotNull(actual.getGenerationDate());
         assertNotNull(actual.getBaseLanguage());
@@ -189,7 +191,7 @@ public class SpecGeneratorTest {
         getParentEp.setReturnType("com.juclient.extra.VerySimpleClass");
         getParentEp.setSuggestedMethodName("getParent");
 
-        UnderstandableType verySimpleClass = new UnderstandableType("com.juclient.extra.VerySimpleClass");
+        UnderstandableType verySimpleClass = new UnderstandableType("VerySimpleClass", "com.juclient.extra");
         verySimpleClass.getFields().add(new UnderstandableField("age", "INTEGER"));
         verySimpleClass.getFields().add(new UnderstandableField("weight", "FLOAT"));
         verySimpleClass.getFields().add(new UnderstandableField("bankBalance", "DOUBLE"));
@@ -242,7 +244,7 @@ public class SpecGeneratorTest {
         getParentEp.setReturnType("com.juclient.extra.VerySimpleCompoundClass");
         getParentEp.setSuggestedMethodName("getParent");
 
-        UnderstandableType verySimpleClass = new UnderstandableType("com.juclient.extra.VerySimpleClass");
+        UnderstandableType verySimpleClass = new UnderstandableType("VerySimpleClass", "com.juclient.extra");
         verySimpleClass.getFields().add(new UnderstandableField("age", "INTEGER"));
         verySimpleClass.getFields().add(new UnderstandableField("weight", "FLOAT"));
         verySimpleClass.getFields().add(new UnderstandableField("bankBalance", "DOUBLE"));
@@ -256,8 +258,8 @@ public class SpecGeneratorTest {
         verySimpleClass.getFields().add(new UnderstandableField("momBirthDate", "DATE"));
         verySimpleClass.getFields().add(new UnderstandableField("dateTime", "DATE"));
 
-        UnderstandableType verySimpleCompoundClass = new UnderstandableType(
-                "com.juclient.extra.VerySimpleCompoundClass");
+        UnderstandableType verySimpleCompoundClass = new UnderstandableType("VerySimpleCompoundClass",
+                "com.juclient.extra");
         verySimpleCompoundClass.getFields().add(new UnderstandableField("name", "STRING"));
         verySimpleCompoundClass.getFields()
                 .add(new UnderstandableField("verySimpleClass", "com.juclient.extra.VerySimpleClass"));
@@ -301,7 +303,7 @@ public class SpecGeneratorTest {
         getParentEp.setReturnType("com.juclient.extra.SimpleCollectionClass");
         getParentEp.setSuggestedMethodName("getParent");
 
-        UnderstandableType understandableType = new UnderstandableType("com.juclient.extra.SimpleCollectionClass");
+        UnderstandableType understandableType = new UnderstandableType("SimpleCollectionClass", "com.juclient.extra");
         understandableType.getFields().add(new UnderstandableField("names", "[STRING]"));
         understandableType.getFields().add(new UnderstandableField("codes", "<INTEGER>"));
         understandableType.getFields().add(new UnderstandableField("nameNickNameMap", "{STRING,STRING}"));
@@ -349,10 +351,10 @@ public class SpecGeneratorTest {
         getParentEp.setReturnType("com.juclient.extra.VerySimpleEnumClass");
         getParentEp.setSuggestedMethodName("getParent");
 
-        UnderstandableType understandableType = new UnderstandableType("com.juclient.extra.VerySimpleEnumClass");
+        UnderstandableType understandableType = new UnderstandableType("VerySimpleEnumClass", "com.juclient.extra");
         understandableType.getFields().add(new UnderstandableField("gender", "com.juclient.extra.Gender"));
 
-        UnderstandableEnum understandableEnum = new UnderstandableEnum("com.juclient.extra.Gender");
+        UnderstandableEnum understandableEnum = new UnderstandableEnum("Gender", "com.juclient.extra");
         understandableEnum.getValues().addAll(List.of("MALE", "FEMALE", "OTHER"));
 
         Spec expectedSpec = new Spec();
@@ -395,7 +397,7 @@ public class SpecGeneratorTest {
         getParentEp.setReturnType("com.juclient.extra.Response([STRING])");
         getParentEp.setSuggestedMethodName("getParent");
 
-        UnderstandableType responseType = new UnderstandableType("com.juclient.extra.Response");
+        UnderstandableType responseType = new UnderstandableType("Response", "com.juclient.extra");
         responseType.setParametrized(true);
         responseType.setParametrizedTypeNames(List.of("T"));
         responseType.getFields().add(new UnderstandableField("data", "T"));

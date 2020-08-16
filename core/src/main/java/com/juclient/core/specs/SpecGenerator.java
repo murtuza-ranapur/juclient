@@ -10,9 +10,7 @@ public class SpecGenerator {
 
     public static Spec generate(Extractor extractor, String targetPackage) {
         List<UnderstandableFunction> functionList = extractor.extract(targetPackage);
-        SpecBuilder builder = new SpecBuilder()
-                .spec(extractor.specName())
-                .version(GENERATOR_VERSION);
+        SpecBuilder builder = new SpecBuilder().spec(extractor.specName()).version(GENERATOR_VERSION);
         functionList.forEach(builder::add);
         return builder.build();
     }

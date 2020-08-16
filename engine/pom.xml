@@ -11,5 +11,18 @@
 
     <artifactId>juclient-engine</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.juclient</groupId>
+            <artifactId>juclient-core</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup</groupId>
+            <artifactId>javapoet</artifactId>
+            <version>1.13.0</version>
+        </dependency>
+    </dependencies>
+
 
 </project>

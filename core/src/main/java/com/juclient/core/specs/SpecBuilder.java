@@ -49,7 +49,7 @@ public class SpecBuilder {
         return this;
     }
 
-    public SpecBuilder spec(String name){
+    public SpecBuilder spec(String name) {
         configuration.setSpec(name);
         return this;
     }
@@ -86,7 +86,8 @@ public class SpecBuilder {
         else if (type instanceof ParameterizedType) {
             ParameterizedType parameterizedType = (ParameterizedType) type;
             Class<?> rawType = (Class<?>) parameterizedType.getRawType();
-            UnderstandableType understandableType = new UnderstandableType(rawType.getTypeName());
+            UnderstandableType understandableType = new UnderstandableType(rawType.getSimpleName(),
+                    rawType.getPackageName());
             typeMap.put(understandableType.getName(), understandableType);
             understandableType.setParametrized(true);
             understandableType.setParametrizedTypeNames(
@@ -117,7 +118,8 @@ public class SpecBuilder {
             if (enumMap.containsKey(type.getTypeName())) {
                 return type.getTypeName();
             }
-            UnderstandableEnum understandableEnum = new UnderstandableEnum(type.getTypeName());
+            UnderstandableEnum understandableEnum = new UnderstandableEnum(((Class<?>) type).getSimpleName(),
+                    ((Class<?>) type).getPackageName());
             Object[] objects = ((Class<?>) type).getEnumConstants();
             Stream.of(objects).map(Object::toString).forEach(understandableEnum.getValues()::add);
             enumMap.put(understandableEnum.getName(), understandableEnum);
@@ -125,7 +127,8 @@ public class SpecBuilder {
         }
         // Primitives, in-built classes, and Composite objects
         else {
-            UnderstandableType understandableType = new UnderstandableType(type.getTypeName());
+            UnderstandableType understandableType = new UnderstandableType(((Class<?>) type).getSimpleName(),
+                    ((Class<?>) type).getPackageName());
             typeMap.put(type.getTypeName(), understandableType);
             for (Field declaredField : ((Class<?>) type).getDeclaredFields()) {
                 if (Modifier.isStatic(declaredField.getModifiers())) {

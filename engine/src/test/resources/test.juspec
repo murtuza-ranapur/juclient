@@ -1,0 +1,156 @@
+{
+  "configuration": {
+    "baseLanguage": "JAVA",
+    "spec": "dummy",
+    "specVersion": "1.0.0",
+    "generationDate": "Aug 16, 2020, 12:19:48 PM"
+  },
+  "endPoints": [
+    {
+      "url": "/parent",
+      "group": "com.juclient.extra",
+      "suggestedMethodName": "getParent",
+      "requestParams": [
+        {
+          "name": "id",
+          "type": "INTEGER",
+          "isRequired": true
+        }
+      ],
+      "headers": [],
+      "pathParams": [],
+      "requestType": "GET",
+      "returnType": "com.juclient.extra.ElementGrandParent"
+    },
+    {
+      "url": "/parent",
+      "group": "com.juclient.extra",
+      "suggestedMethodName": "createParent",
+      "requestParams": [],
+      "headers": [],
+      "pathParams": [],
+      "requestType": "POST",
+      "requestBodyType": "com.juclient.extra.ElementGrandParent",
+      "returnType": "STRING"
+    },
+    {
+      "url": "/parent/search/{NAME}",
+      "group": "com.juclient.extra",
+      "suggestedMethodName": "search",
+      "requestParams": [],
+      "headers": [],
+      "pathParams": [
+        "name"
+      ],
+      "requestType": "GET",
+      "returnType": "com.juclient.extra.Response([com.juclient.extra.ElementGrandParent])"
+    }
+  ],
+  "types": [
+    {
+      "name": "com.juclient.extra.Response",
+      "simpleName": "Response",
+      "path": "com.juclient.extra",
+      "fields": [
+        {
+          "name": "data",
+          "type": "T",
+          "isCoreType": true
+        },
+        {
+          "name": "size",
+          "type": "INTEGER",
+          "isCoreType": true
+        },
+        {
+          "name": "page",
+          "type": "INTEGER",
+          "isCoreType": true
+        }
+      ],
+      "isParametrized": true,
+      "parametrizedTypeNames": [
+        "T"
+      ]
+    },
+    {
+      "name": "com.juclient.extra.ElementChild",
+      "simpleName": "ElementChild",
+      "path": "com.juclient.extra",
+      "fields": [
+        {
+          "name": "gender",
+          "type": "com.juclient.extra.Gender",
+          "isCoreType": true
+        },
+        {
+          "name": "name",
+          "type": "STRING",
+          "isCoreType": true
+        }
+      ],
+      "isParametrized": false,
+      "parametrizedTypeNames": []
+    },
+    {
+      "name": "com.juclient.extra.ElementGrandParent",
+      "simpleName": "ElementGrandParent",
+      "path": "com.juclient.extra",
+      "fields": [
+        {
+          "name": "name",
+          "type": "STRING",
+          "isCoreType": true
+        },
+        {
+          "name": "age",
+          "type": "INTEGER",
+          "isCoreType": true
+        },
+        {
+          "name": "parents",
+          "type": "[com.juclient.extra.ElementParent]",
+          "isCoreType": true
+        }
+      ],
+      "isParametrized": false,
+      "parametrizedTypeNames": []
+    },
+    {
+      "name": "com.juclient.extra.ElementParent",
+      "simpleName": "ElementParent",
+      "path": "com.juclient.extra",
+      "fields": [
+        {
+          "name": "balance",
+          "type": "LONG",
+          "isCoreType": true
+        },
+        {
+          "name": "height",
+          "type": "FLOAT",
+          "isCoreType": true
+        },
+        {
+          "name": "children",
+          "type": "<com.juclient.extra.ElementChild>",
+          "isCoreType": true
+        }
+      ],
+      "isParametrized": false,
+      "parametrizedTypeNames": []
+    }
+  ],
+  "enums": [
+    {
+      "name": "com.juclient.extra.Gender",
+      "simpleName": "Gender",
+      "path": "com.juclient.extra",
+      "values": [
+        "MALE",
+        "FEMALE",
+        "OTHER"
+      ]
+    }
+  ]
+}
