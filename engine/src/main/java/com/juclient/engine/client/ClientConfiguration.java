@@ -7,4 +7,6 @@ public abstract class ClientConfiguration {
     private String name;
     private String targetPath;
     private String version;
+    private String groupName;
+    private String artifactName;
 }

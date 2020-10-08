@@ -1,8 +1,9 @@
 package com.juclient.engine.client;
 
-import com.juclient.core.specs.Spec;
+import com.juclient.engine.packagemanager.Dependency;
 
 public interface ClientGenerator {
-    void generate(Spec spec);
+    void generate();
 
+    Dependency getDependency();
 }
