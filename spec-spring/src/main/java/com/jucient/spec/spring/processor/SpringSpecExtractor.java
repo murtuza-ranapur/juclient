@@ -41,6 +41,11 @@ public class SpringSpecExtractor implements Extractor {
         return functions;
     }
 
+    @Override
+    public String specName() {
+        return null;
+    }
+
     private UnderstandableFunction convertToUnderstandableFunction(Method method, String base) {
         UnderstandableFunction understandableFunction = new UnderstandableFunction();
         putTypeAndPath(understandableFunction, method, base);
