@@ -29,7 +29,7 @@ public class MavenScaffoldCreator extends ContextManaged implements ScaffoldCrea
     private static final String VERSION = "${version}";
     private static final String NAME = "${name}";
     private static final String DEPENDENCIES = "${dependencies}";
-    private static final Path GENERATION_PATH = Path.of("src","main","java");
+    private static final Path GENERATION_PATH = Path.of("src", "main", "java");
     private final String template;
     private final String dependencyTemplate;
 

@@ -38,19 +38,13 @@ class MavenScaffoldCreatorTest {
 
     @Test
     public void create_maven_scaffold() throws IOException {
-        //test in temp
+        // test in temp
         Path temp = Paths.get(System.getProperty("java.io.tmpdir"));
         Path path = temp.resolve("maven-test");
 
-        Files.walk(path)
-                .sorted(Comparator.reverseOrder())
-                .map(Path::toFile)
-                .forEach(File::delete);
+        Files.walk(path).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
 
-        Dependency dependency = Dependency.builder()
-                .groupId("feign")
-                .artifactName("feign-art")
-                .versionName("version")
+        Dependency dependency = Dependency.builder().groupId("feign").artifactName("feign-art").versionName("version")
                 .build();
 
         when(context.getConfiguration()).thenReturn(clientConfiguration);

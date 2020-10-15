@@ -41,9 +41,11 @@ class JavaTypeGeneratorTest {
 
     @Test
     public void testGenerateJavaFilesForOnlyNativeTypes() throws IOException {
-        String expected = IOUtils.toString(JavaTypeGenerator.class.getResourceAsStream("/output/testGenerateJavaFilesForOnlyNativeTypes.txt"), Charset.defaultCharset());
+        String expected = IOUtils.toString(
+                JavaTypeGenerator.class.getResourceAsStream("/output/testGenerateJavaFilesForOnlyNativeTypes.txt"),
+                Charset.defaultCharset());
 
-        UnderstandableType understandableType = new UnderstandableType("SimpleChild","com.simple");
+        UnderstandableType understandableType = new UnderstandableType("SimpleChild", "com.simple");
         understandableType.setFields(List.of(new UnderstandableField("name", InBuiltTypes.STRING.name())));
 
         Path temp = Paths.get(System.getProperty("java.io.tmpdir"));
@@ -51,12 +53,9 @@ class JavaTypeGeneratorTest {
 
         var generationPath = path.resolve("src").resolve("main").resolve("java");
 
-        if(Files.exists(generationPath)) {
-            Files.walk(path)
-                    .sorted(Comparator.reverseOrder())
-                    .filter(path1 -> !path1.endsWith("java"))
-                    .map(Path::toFile)
-                    .forEach(File::delete);
+        if (Files.exists(generationPath)) {
+            Files.walk(path).sorted(Comparator.reverseOrder()).filter(path1 -> !path1.endsWith("java"))
+                    .map(Path::toFile).forEach(File::delete);
         }
 
         when(spec.getTypes()).thenReturn(List.of(understandableType));
@@ -67,7 +66,8 @@ class JavaTypeGeneratorTest {
 
         javaTypeGenerator.generate();
 
-        var generatedPath = generationPath.resolve("com").resolve("simple").resolve("modal").resolve("SimpleChild.java");
+        var generatedPath = generationPath.resolve("com").resolve("simple").resolve("modal")
+                .resolve("SimpleChild.java");
 
         assertTrue(Files.exists(generatedPath));
         assertEquals(expected, Files.readString(generatedPath).strip());
