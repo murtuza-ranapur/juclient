@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -28,6 +29,7 @@ public class MavenScaffoldCreator extends ContextManaged implements ScaffoldCrea
     private static final String VERSION = "${version}";
     private static final String NAME = "${name}";
     private static final String DEPENDENCIES = "${dependencies}";
+    private static final Path GENERATION_PATH = Path.of("src","main","java");
     private final String template;
     private final String dependencyTemplate;
 
@@ -62,6 +64,10 @@ public class MavenScaffoldCreator extends ContextManaged implements ScaffoldCrea
         // Write pom file
         final var pomPath = projectPath.resolve("pom.xml");
         Files.createFile(pomPath);
+        // Create package structure and set generation path for type generation
+        final var typeGenerationPath = projectPath.resolve(GENERATION_PATH);
+        Files.createDirectories(typeGenerationPath);
+        configuration.setGenerationPath(typeGenerationPath.toString());
         Files.write(pomPath, buildTemplate.getBytes(), StandardOpenOption.WRITE);
 
     }

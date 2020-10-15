@@ -9,4 +9,6 @@ public abstract class ClientConfiguration {
     private String version;
     private String groupName;
     private String artifactName;
+    private String generationPath;
+    private String packageName;
 }

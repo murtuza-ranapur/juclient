@@ -6,6 +6,7 @@ import com.juclient.engine.client.ClientGenerator;
 import com.juclient.engine.packagemanager.Dependency;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.platform.commons.util.StringUtils;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -18,7 +19,7 @@ import java.nio.file.Paths;
 import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class MavenScaffoldCreatorTest {
@@ -66,7 +67,9 @@ class MavenScaffoldCreatorTest {
 
         assertTrue(Files.exists(path));
         assertTrue(Files.exists(path.resolve("mock-project")));
+        assertTrue(Files.exists(path.resolve("mock-project").resolve("src").resolve("main").resolve("java")));
         assertTrue(Files.exists(path.resolve("mock-project").resolve("pom.xml")));
 
+        verify(clientConfiguration, times(1)).setGenerationPath(anyString());
     }
 }

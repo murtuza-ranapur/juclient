@@ -1,5 +1,6 @@
 package com.juclient.engine;
 
+import com.juclient.core.specs.Spec;
 import com.juclient.engine.client.ClientConfiguration;
 import com.juclient.engine.client.ClientGenerator;
 import com.juclient.engine.packagemanager.ScaffoldCreator;
@@ -14,6 +15,7 @@ import lombok.Setter;
 public class Context {
     private final String clientName;
     private final ClientConfiguration configuration;
+    private final Spec spec;
 
     private ClientGenerator clientGenerator;
     private ScaffoldCreator scaffoldCreator;
