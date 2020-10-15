@@ -1,23 +1,23 @@
 package com.juclient.engine.packagemanager.java;
 
-import com.google.common.jimfs.File;
-import com.google.common.jimfs.Jimfs;
 import com.juclient.engine.Context;
 import com.juclient.engine.client.ClientConfiguration;
 import com.juclient.engine.client.ClientGenerator;
 import com.juclient.engine.packagemanager.Dependency;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.nio.file.FileSystem;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Comparator;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,10 +36,15 @@ class MavenScaffoldCreatorTest {
     private ClientGenerator clientGenerator;
 
     @Test
-    public void create_maven_scaffold(){
-        //Set up in memory file system
-        FileSystem fileSystem = Jimfs.newFileSystem();
-        Path path = fileSystem.getPath("test");
+    public void create_maven_scaffold() throws IOException {
+        //test in temp
+        Path temp = Paths.get(System.getProperty("java.io.tmpdir"));
+        Path path = temp.resolve("maven-test");
+
+        Files.walk(path)
+                .sorted(Comparator.reverseOrder())
+                .map(Path::toFile)
+                .forEach(File::delete);
 
         Dependency dependency = Dependency.builder()
                 .groupId("feign")
