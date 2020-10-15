@@ -71,8 +71,8 @@ public class SpecBuilder {
             return null;
         }
         // Primitives and inbuilt types
-        if (InBuiltTypes.getType(type.getTypeName()).isPresent()) {
-            return InBuiltTypes.getType(type.getTypeName()).get();
+        if (InBuiltTypes.getType(type).isPresent()) {
+            return InBuiltTypes.getType(type).get();
         }
         // Types already processed
         else if (typeMap.containsKey(type.getTypeName())) {

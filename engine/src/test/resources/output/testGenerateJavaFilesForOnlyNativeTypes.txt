@@ -1,0 +1,15 @@
+package com.simple.modal;
+
+import java.lang.String;
+
+public class SimpleChild {
+  private String name;
+
+  String getName() {
+    return name;
+  }
+
+  void setName(String name) {
+    this.name = name;
+  }
+}
