@@ -46,7 +46,17 @@ class JavaTypeGeneratorTest {
                 Charset.defaultCharset());
 
         UnderstandableType understandableType = new UnderstandableType("SimpleChild", "com.simple");
-        understandableType.setFields(List.of(new UnderstandableField("name", InBuiltTypes.STRING.name())));
+        understandableType.setFields(List.of(
+                new UnderstandableField("name", InBuiltTypes.STRING.name()),
+                new UnderstandableField("isEducated", InBuiltTypes.BOOLEAN.name()),
+                new UnderstandableField("birthDate",InBuiltTypes.DATE.name()),
+                new UnderstandableField("height", InBuiltTypes.DOUBLE.name()),
+                new UnderstandableField("weight", InBuiltTypes.FLOAT.name()),
+                new UnderstandableField("age", InBuiltTypes.INTEGER.name()),
+                new UnderstandableField("pin", InBuiltTypes.LONG.name()),
+                new UnderstandableField("miscellaneous", InBuiltTypes.OBJECT.name()),
+                new UnderstandableField("birthTime", InBuiltTypes.TIME.name())
+                ));
 
         Path temp = Paths.get(System.getProperty("java.io.tmpdir"));
         Path path = temp.resolve("maven-test");
@@ -70,6 +80,6 @@ class JavaTypeGeneratorTest {
                 .resolve("SimpleChild.java");
 
         assertTrue(Files.exists(generatedPath));
-        assertEquals(expected, Files.readString(generatedPath).strip());
+        assertEquals(expected.replace("\r\n",""), Files.readString(generatedPath).strip().replace("\n",""));
     }
 }

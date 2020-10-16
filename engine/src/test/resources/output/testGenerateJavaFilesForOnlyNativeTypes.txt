@@ -1,15 +1,98 @@
 package com.simple.modal;
 
+import java.lang.Object;
 import java.lang.String;
+import java.time.LocalTime;
+import java.util.Date;
 
 public class SimpleChild {
   private String name;
 
-  String getName() {
+  private boolean isEducated;
+
+  private Date birthDate;
+
+  private double height;
+
+  private float weight;
+
+  private int age;
+
+  private long pin;
+
+  private Object miscellaneous;
+
+  private LocalTime birthTime;
+
+  public String getName() {
     return name;
   }
 
-  void setName(String name) {
+  public void setName(String name) {
     this.name = name;
+  }
+
+  public boolean getIsEducated() {
+    return isEducated;
+  }
+
+  public void setIsEducated(boolean isEducated) {
+    this.isEducated = isEducated;
+  }
+
+  public Date getBirthDate() {
+    return birthDate;
+  }
+
+  public void setBirthDate(Date birthDate) {
+    this.birthDate = birthDate;
+  }
+
+  public double getHeight() {
+    return height;
+  }
+
+  public void setHeight(double height) {
+    this.height = height;
+  }
+
+  public float getWeight() {
+    return weight;
+  }
+
+  public void setWeight(float weight) {
+    this.weight = weight;
+  }
+
+  public int getAge() {
+    return age;
+  }
+
+  public void setAge(int age) {
+    this.age = age;
+  }
+
+  public long getPin() {
+    return pin;
+  }
+
+  public void setPin(long pin) {
+    this.pin = pin;
+  }
+
+  public Object getMiscellaneous() {
+    return miscellaneous;
+  }
+
+  public void setMiscellaneous(Object miscellaneous) {
+    this.miscellaneous = miscellaneous;
+  }
+
+  public LocalTime getBirthTime() {
+    return birthTime;
+  }
+
+  public void setBirthTime(LocalTime birthTime) {
+    this.birthTime = birthTime;
   }
 }

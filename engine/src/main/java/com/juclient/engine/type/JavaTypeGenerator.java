@@ -67,8 +67,10 @@ public class JavaTypeGenerator extends ContextManaged implements TypeGenerator {
                 Type classType = getActualType(field.getType());
                 FieldSpec fieldSpec = FieldSpec.builder(classType, field.getName(), Modifier.PRIVATE).build();
                 MethodSpec getMethodSpec = MethodSpec.methodBuilder(getGetterFromName(field.getName()))
+                        .addModifiers(Modifier.PUBLIC)
                         .returns(classType).addStatement("return $L", field.getName()).build();
                 MethodSpec setMethodSpec = MethodSpec.methodBuilder(getSetterFromName(field.getName()))
+                        .addModifiers(Modifier.PUBLIC)
                         .returns(void.class).addParameter(classType, field.getName())
                         .addStatement("this.$L = $L", field.getName(), field.getName()).build();
                 typeSpecBuilder.addField(fieldSpec);
