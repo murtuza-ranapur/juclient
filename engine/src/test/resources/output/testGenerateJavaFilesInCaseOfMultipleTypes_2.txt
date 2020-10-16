@@ -1,0 +1,56 @@
+package com.simple.modal;
+
+import java.lang.String;
+import java.util.Date;
+
+public class SimpleCousin {
+  private String name;
+
+  private boolean isEducated;
+
+  private Date birthDate;
+
+  private double height;
+
+  private float weight;
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public boolean getIsEducated() {
+    return isEducated;
+  }
+
+  public void setIsEducated(boolean isEducated) {
+    this.isEducated = isEducated;
+  }
+
+  public Date getBirthDate() {
+    return birthDate;
+  }
+
+  public void setBirthDate(Date birthDate) {
+    this.birthDate = birthDate;
+  }
+
+  public double getHeight() {
+    return height;
+  }
+
+  public void setHeight(double height) {
+    this.height = height;
+  }
+
+  public float getWeight() {
+    return weight;
+  }
+
+  public void setWeight(float weight) {
+    this.weight = weight;
+  }
+}

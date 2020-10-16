@@ -1,0 +1,46 @@
+package com.simple.modal;
+
+import java.lang.Object;
+import java.time.LocalTime;
+
+public class SimpleChild {
+  private int age;
+
+  private long pin;
+
+  private Object miscellaneous;
+
+  private LocalTime birthTime;
+
+  public int getAge() {
+    return age;
+  }
+
+  public void setAge(int age) {
+    this.age = age;
+  }
+
+  public long getPin() {
+    return pin;
+  }
+
+  public void setPin(long pin) {
+    this.pin = pin;
+  }
+
+  public Object getMiscellaneous() {
+    return miscellaneous;
+  }
+
+  public void setMiscellaneous(Object miscellaneous) {
+    this.miscellaneous = miscellaneous;
+  }
+
+  public LocalTime getBirthTime() {
+    return birthTime;
+  }
+
+  public void setBirthTime(LocalTime birthTime) {
+    this.birthTime = birthTime;
+  }
+}
